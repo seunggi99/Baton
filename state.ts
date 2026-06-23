@@ -26,11 +26,12 @@ export interface TurnRecord {
 
 export interface LoopState {
   status: RunStatus;
-  currentStep: number;        // 0-based 인덱스 (id 아님!)
+  currentStep: number;
   consecutiveFailures: number;
-  maxFailures: number;        // 가드 임계값 (판정은 guard.ts, 카운트는 여기)
+  maxFailures: number;
   steps: Step[];
   turns: TurnRecord[];
+  haltReason?: string;  
 }
 
 const STATE_PATH = "state.json";
@@ -44,6 +45,7 @@ export function initialState(steps: Step[], maxFailures = 3): LoopState {
     maxFailures,
     steps,
     turns: [],
+    haltReason: undefined,  
   };
 }
 
