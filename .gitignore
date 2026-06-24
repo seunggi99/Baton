@@ -1,3 +1,5 @@
 *.test-run.ts
 *-spike.ts
 node_modules/
+state.json
+report.md
