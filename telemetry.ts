@@ -8,14 +8,15 @@ import type { LoopState, TurnRecord } from "./state.js";
 // 결정7-A: perModel 을 가공 없이 날것으로 보관. 합산은 리포트 만들 때 한 번에.
 export function toTurnRecord(
   step: number,
-  result: ClaudeRunResult
+  result: ClaudeRunResult,
+  passed: boolean  
 ): TurnRecord {
   return {
     step,
-    passed: result.ok,
+    passed,        
     totalCostUsd: result.totalCostUsd,
     durationMs: result.durationMs,
-    perModel: result.perModel, // 날것 그대로 (모델별 배열)
+    perModel: result.perModel,
   };
 }
 

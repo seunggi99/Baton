@@ -45,7 +45,7 @@ export async function runSupervisor(cfg: SupervisorConfig): Promise<LoopState> {
     );
 
     // (5) 비용 적립 (telemetry)
-    appendTurn(state, toTurnRecord(step.id, result));
+    appendTurn(state, toTurnRecord(step.id, result, succeeded));
 
     // (6) 상태 갱신
     if (succeeded) {

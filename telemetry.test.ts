@@ -35,7 +35,7 @@ function fakeResult(over: Partial<ClaudeRunResult> = {}): ClaudeRunResult {
 
 describe("toTurnRecord", () => {
   it("runOnce 결과를 turns 한 줄로 변환한다 (perModel 날것 보관)", () => {
-    const rec = toTurnRecord(1, fakeResult());
+    const rec = toTurnRecord(1, fakeResult(), true);   
     expect(rec.step).toBe(1);
     expect(rec.passed).toBe(true);
     expect(rec.totalCostUsd).toBe(0.02);
@@ -43,7 +43,7 @@ describe("toTurnRecord", () => {
   });
 
   it("실패 결과면 passed=false 로 기록한다", () => {
-    const rec = toTurnRecord(2, fakeResult({ ok: false }));
+    const rec = toTurnRecord(2, fakeResult({ ok: false }), false);  
     expect(rec.passed).toBe(false);
   });
 });
@@ -57,8 +57,8 @@ describe("writeReport — 모델별 누적 합산 (핵심)", () => {
   it("여러 턴에 걸친 같은 모델 비용을 합산한다", () => {
     const s = initialState(makeSteps());
     // 2턴 모두 opus+haiku 사용 → opus 0.018*2, haiku 0.002*2 로 합쳐져야 함
-    appendTurn(s, toTurnRecord(1, fakeResult()));
-    appendTurn(s, toTurnRecord(2, fakeResult()));
+    appendTurn(s, toTurnRecord(1, fakeResult(), true));   
+    appendTurn(s, toTurnRecord(2, fakeResult(), true));   
 
     writeReport(s, REPORT);
     const md = readFileSync(REPORT, "utf-8");
@@ -70,8 +70,8 @@ describe("writeReport — 모델별 누적 합산 (핵심)", () => {
 
   it("총 비용과 턴 수를 집계한다", () => {
     const s = initialState(makeSteps());
-    appendTurn(s, toTurnRecord(1, fakeResult()));
-    appendTurn(s, toTurnRecord(2, fakeResult({ ok: false })));
+    appendTurn(s, toTurnRecord(1, fakeResult(), true));           
+    appendTurn(s, toTurnRecord(2, fakeResult({ ok: false }), false)); 
 
     writeReport(s, REPORT);
     const md = readFileSync(REPORT, "utf-8");
