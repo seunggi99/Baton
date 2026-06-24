@@ -54,3 +54,5 @@ export const urlShortenerSteps: Step[] = [
       "명세에 없는 기능은 추가하지 마라.",
   },
 ];
+
+export default urlShortenerSteps;
