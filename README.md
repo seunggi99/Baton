@@ -12,7 +12,7 @@ Baton은 이러한 문제를 해결하기 위해 만든 Supervisor Harness로, C
 
 > **참고**
 >
-> 자율 실행 루프 아이디어는 오픈소스 프로젝트 `sidabari4loop`에서 영감을 받았다.
+> 자율 실행 루프 아이디어는 오픈소스 프로젝트 [sidabari4loop](https://github.com/cx8537/sidabari4loop)에서 영감을 받았다.
 >
 > 다만 sidabari4loop가 PTY 세션과 Hook 이벤트 기반으로 동작하는 반면, Baton은 `claude -p` 기반의 헤드리스 단발 호출 방식을 사용한다.
 
@@ -102,8 +102,7 @@ URL 단축 API를 단계 정의만으로 생성하는 End-to-End 시나리오를
 
 #### 결과물
 
-- Repository: `<repository-url>`
-- Report: `<report-url>`
+- Repository: [repository-url](https://github.com/seunggi99/Url-Shortener)
 
 ### 실패 시나리오 검증
 
