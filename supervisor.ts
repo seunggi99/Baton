@@ -7,7 +7,7 @@ import {
 } from "./state.js";
 import { toTurnRecord, writeReport } from "./telemetry.js";
 import { checkHalt } from "./guard.js";
-import { runVerify } from "./verify.js";
+import { runVerify, commitStep } from "./verify.js";
 
 const ALLOWED_TOOLS = "Read,Write,Edit,Bash"; // 대상 프로젝트를 만들려면 이 정도 필요
 
@@ -50,6 +50,9 @@ export async function runSupervisor(cfg: SupervisorConfig): Promise<LoopState> {
     // (6) 상태 갱신
     if (succeeded) {
       markDone(state);
+      // 감독자가 직접 단계별 커밋 (커밋 히스토리 = 자율 진행 증거)
+      const committed = await commitStep(`step ${step.id}: ${step.title}`, cfg.cwd);
+      console.log(`  commit: ${committed ? "✅" : "⚠️ 실패"}`);
     } else {
       markFailed(state);
       // 직전 실패 로그를 step 에 임시 보관 → 다음 턴 프롬프트가 참조
